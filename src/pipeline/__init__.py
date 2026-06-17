@@ -1,0 +1,1 @@
+"""Pipeline orchestration — incremental, idempotent end-to-end runs."""

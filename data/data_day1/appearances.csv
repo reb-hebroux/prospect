@@ -1,0 +1,10 @@
+appearance_id,game_id,player_id,player_club_id,player_current_club_id,date,player_name,competition_id,yellow_cards,red_cards,goals,assists,minutes_played
+3001,2001,1001,101,101,2024-08-17 15:00:00,Bukayo Saka,GB1,0,0,1,0,90
+3002,2001,1002,101,101,2024-08-17 15:00:00,Martin Odegaard,GB1,0,0,0,1,90
+3003,2001,1003,102,102,2024-08-17 15:00:00,Cole Palmer,GB1,1,0,1,0,85
+3004,2002,1001,101,101,2024-08-17 17:30:00,Bukayo Saka,GB1,0,0,1,0,90
+3005,2002,1004,103,103,2024-08-17 17:30:00,Mohamed Salah,GB1,0,0,0,1,90
+3006,2003,1003,102,102,2024-08-24 15:00:00,Cole Palmer,GB1,0,0,0,0,90
+3007,2003,1004,103,103,2024-08-24 15:00:00,Mohamed Salah,GB1,0,0,2,0,90
+3008,2004,1002,101,101,2024-08-25 16:30:00,Martin Odegaard,GB1,0,0,0,1,90
+3009,2004,1005,103,103,2024-08-25 16:30:00,Virgil van Dijk,GB1,0,0,0,0,90

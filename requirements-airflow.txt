@@ -1,0 +1,5 @@
+# Pipeline dependencies baked into the Airflow image (see Dockerfile).
+# Airflow 3.2.2 base image already includes apache-airflow and common providers.
+-r requirements.txt
+
+apache-airflow==3.2.2

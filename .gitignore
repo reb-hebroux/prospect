@@ -1,0 +1,34 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+dist/
+build/
+presentation/
+
+# Pipeline outputs (generated at runtime)
+data/bronze/
+data/silver/
+data/gold/
+data/state/
+logs/
+reports/
+
+# Airflow / Docker runtime
+airflow/logs/
+airflow/airflow.db
+airflow/airflow.cfg
+
+# IDE & OS
+.idea/
+.vscode/
+.DS_Store
+
+# Optional: full Kaggle download (keep sample data_day1/day2 in git)
+data/raw/

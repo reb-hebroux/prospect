@@ -1,0 +1,4 @@
+club_id,club_code,name,domestic_competition_id,total_market_value,squad_size,average_age,foreigners_number,foreigners_percentage,national_team_players,stadium_name,stadium_seats,net_transfer_record,coach_name,last_season,filename,url
+101,arsenal,Arsenal FC,GB1,920000000,25,25.0,15,60.0,12,Emirates Stadium,60704,5000000,Mikel Arteta,2026,arsenal.csv,https://example.com/arsenal
+102,chelsea,Chelsea FC,GB1,830000000,26,26.0,18,69.0,10,Stamford Bridge,40341,-25000000,Mauricio Pochettino,2026,chelsea.csv,https://example.com/chelsea
+103,liverpool,Liverpool FC,GB1,980000000,24,27.0,14,58.0,11,Anfield,53394,15000000,Arne Slot,2026,liverpool.csv,https://example.com/liverpool

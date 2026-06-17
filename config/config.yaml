@@ -1,0 +1,113 @@
+project:
+  name: football-analytics-pipeline
+  version: "0.1.0"
+
+engine:
+  # pandas | spark — see README "Processing engine choice"
+  default: pandas
+  # Scale guidance (documented in README): switch to spark above ~10M rows/table
+  # or when single-node memory exceeds ~16 GB during transform/aggregate steps.
+
+paths:
+  # Input CSV snapshots (relative to project root)
+  data_root: data
+  snapshots:
+    day1: data/data_day1
+    day2: data/data_day2
+  # Medallion output directories (created at runtime)
+  bronze: data/bronze
+  silver: data/silver
+  gold: data/gold
+  logs: logs
+  dq_reports: reports/dq
+
+tables:
+  # Kaggle Football Dataset — full extract list
+  source:
+    - players
+    - games
+    - appearances
+    - clubs
+    - competitions
+    - player_valuations
+
+incremental:
+  # Simulated feed frequency (used by Airflow schedule in later steps)
+  frequency: hourly
+  # Column used to detect new games
+  game_date_column: date
+  # Soft-delete flag column (added in data_day2 for players)
+  soft_delete_column: is_deleted
+  # Ordered feed snapshots for the stateful incremental runner
+  snapshot_order:
+    - data_day1
+    - data_day2
+  state_file: data/state/pipeline_state.json
+  cumulative_bronze: data/bronze/cumulative
+
+scd:
+  type: 2
+  track_fields:
+    - effective_date
+    - end_date
+    - is_current
+  # Entities requiring SCD Type 2
+  dimensions:
+    - players
+    - player_valuations
+
+gold:
+  valuation_rolling_window: 3
+  tables:
+    - gold_player_performance
+    - gold_club_performance
+    - gold_player_valuation_trend
+
+transforms:
+  position_taxonomy:
+    Attack: [Attack, Centre-Forward, Left Winger, Right Winger, Second Striker]
+    Midfield: [Midfield, Defensive Midfield, Central Midfield, Attacking Midfield]
+    Defence: [Defence, Centre-Back, Left-Back, Right-Back]
+    Goalkeeper: [Goalkeeper]
+  season:
+    # European season starts August — month >= 8 belongs to season start year
+    start_month: 8
+
+data_quality:
+  required:
+    null_checks:
+      - table: appearances
+        columns: [player_id, game_id]
+    referential_integrity:
+      - child_table: appearances
+        child_column: player_id
+        parent_table: players
+        parent_column: player_id
+    valid_ranges:
+      - table: appearances
+        column: minutes_played
+        min: 0
+      - table: appearances
+        column: goals
+        min: 0
+  bonus:
+    duplicate_checks:
+      - table: appearances
+        columns: [appearance_id]
+      - table: games
+        columns: [game_id]
+      - table: players
+        columns: [player_id]
+    schema_drift:
+      enabled: true
+  output_format: json  # per-run DQ report under reports/dq/
+
+orchestration:
+  dag_id: football_analytics_pipeline
+  schedule: "@hourly"
+  retries: 2
+  retry_delay_minutes: 5
+
+docker:
+  pipeline_image: football-analytics-pipeline
+  airflow_ui_port: 8080
